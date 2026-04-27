@@ -17,7 +17,7 @@ const TemperatureConverter: React.FC<Props> = ({ value, unit }) => {
     celsius = value - 273.15;
   }
 
-  // Conversiones
+  // Las Conversiones
   const fahrenheit = (celsius * 9) / 5 + 32;
   const kelvin = celsius + 273.15;
 

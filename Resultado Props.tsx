@@ -1,40 +1,37 @@
+import React from "react";
+
 type Props = {
-  valor: number;
-  tipo: string;
-  conversiones: string[];
+  value: number;
+  unit: "C" | "F" | "K";
 };
 
-function Resultado({ valor, tipo, conversiones }: Props) {
-  const r: string[] = [];
+const TemperatureConverter: React.FC<Props> = ({ value, unit }) => {
+  let celsius = 0;
 
-  if (tipo === "C") {
-    if (conversiones.includes("C-F"))
-      r.push(`C → F: ${(valor * 9 / 5 + 32).toFixed(2)}`);
-    if (conversiones.includes("C-K"))
-      r.push(`C → K: ${(valor + 273.15).toFixed(2)}`);
+  // Convertir a Celsius base
+  if (unit === "C") {
+    celsius = value;
+  } else if (unit === "F") {
+    celsius = (value - 32) * 5 / 9;
+  } else if (unit === "K") {
+    celsius = value - 273.15;
   }
 
-  if (tipo === "F") {
-    if (conversiones.includes("F-C"))
-      r.push(`F → C: ${((valor - 32) * 5 / 9).toFixed(2)}`);
-    if (conversiones.includes("F-K"))
-      r.push(`F → K: ${((valor - 32) * 5 / 9 + 273.15).toFixed(2)}`);
-  }
-
-  if (tipo === "K") {
-    if (conversiones.includes("K-C"))
-      r.push(`K → C: ${(valor - 273.15).toFixed(2)}`);
-    if (conversiones.includes("K-F"))
-      r.push(`K → F: ${((valor - 273.15) * 9 / 5 + 32).toFixed(2)}`);
-  }
+  // Conversiones
+  const fahrenheit = (celsius * 9) / 5 + 32;
+  const kelvin = celsius + 273.15;
 
   return (
-    <ul>
-      {r.map((x, i) => (
-        <li key={i}>{x}</li>
-      ))}
-    </ul>
-  );
-}
+    <div>
+      <h2>Resultados</h2>
 
-export default Resultado;
+      <ul>
+        <li>Celsius: {celsius.toFixed(2)} °C</li>
+        <li>Fahrenheit: {fahrenheit.toFixed(2)} °F</li>
+        <li>Kelvin: {kelvin.toFixed(2)} K</li>
+      </ul>
+    </div>
+  );
+};
+
+export default TemperatureConverter;
